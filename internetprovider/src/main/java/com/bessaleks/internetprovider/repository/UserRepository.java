@@ -1,0 +1,4 @@
+package com.bessaleks.internetprovider.repository;
+
+public interface UserRepository {
+}
