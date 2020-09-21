@@ -1,23 +1,28 @@
 package com.bessaleks.internetprovider.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Contract {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+@Data
+@AllArgsConstructor
+@Table (name="contracts")
+public class Contract extends BaseEntity{
 
+    @Column(name="contract_number")
     private String number;
+
+    @Column(name="contract_startDate")
     private Date startDate;
 
     @ManyToOne(fetch= FetchType.LAZY, cascade= CascadeType.ALL)
-    @JsonBackReference
+    @JoinTable(name = "address")
     private Address address;
 
     @OneToOne(optional=false, cascade=CascadeType.ALL)
+    @JoinTable(name = "rates")
     private Rate rate;
 }

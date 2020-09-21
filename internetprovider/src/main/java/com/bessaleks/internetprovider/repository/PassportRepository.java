@@ -1,4 +1,7 @@
 package com.bessaleks.internetprovider.repository;
 
-public interface PassportRepository {
+import com.bessaleks.internetprovider.models.Passport;
+import org.springframework.data.repository.CrudRepository;
+
+public interface PassportRepository extends CrudRepository<Passport,Long> {
 }

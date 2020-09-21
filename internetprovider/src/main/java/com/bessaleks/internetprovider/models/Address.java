@@ -1,26 +1,41 @@
 package com.bessaleks.internetprovider.models;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+@Data
+@AllArgsConstructor
+@Table (name="address")
+public class Address extends BaseEntity{
 
     @ManyToOne(fetch= FetchType.LAZY, cascade=CascadeType.ALL)
-    @JsonBackReference
+    @JoinTable(name = "users")
     private User user;
 
-    private String country,city,street,house,flat;
+    @Column(name="address_country")
+    private String country;
+
+    @Column(name="address_city")
+    private String city;
+
+    @Column(name="address_street")
+    private String street;
+
+    @Column(name="address_house")
+    private String house;
+
+    @Column(name="address_flat")
+    private String flat;
+
+    @Column(name="address_postCode")
     private Long postCode;
 
     @OneToMany(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
     private Collection<Contract> contracts;
+
 }

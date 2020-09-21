@@ -1,19 +1,24 @@
 package com.bessaleks.internetprovider.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
-public class OperationsHistory {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+@Data
+@AllArgsConstructor
+@Table (name="operations_history")
+public class OperationsHistory extends BaseEntity{
 
+    @Column(name="operation_history_operationType")
     private String operationType;
+
+    @Column(name="operation_history_operationSum")
     private Long operationSum;
 
     @ManyToOne(fetch= FetchType.LAZY, cascade=CascadeType.ALL)
-    @JsonBackReference
+    @JoinTable(name = "users")
     private User user;
 }
