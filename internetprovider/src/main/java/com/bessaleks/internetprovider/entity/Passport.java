@@ -1,22 +1,29 @@
-package com.bessaleks.internetprovider.models;
+package com.bessaleks.internetprovider.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.bessaleks.internetprovider.enums.Sex;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Table (name="passports")
-public class Passport extends BaseEntity{
+public class PassportDto extends BaseEntityDto {
 
     @OneToOne(fetch= FetchType.LAZY, cascade=CascadeType.ALL)
-    @JoinTable(name = "users")
-    private User user;
+    private UserDto userDto;
+
+    @NotBlank
+    @OneToOne
+    @MapsId
+    @JoinColumn(name="addressId")
+    private AddressDto addressDto;
 
     @Column(name="user_name")
     private String name;
@@ -41,4 +48,5 @@ public class Passport extends BaseEntity{
 
     @Column(name="passport_sex")
     private Sex sex;
+
 }
