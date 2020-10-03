@@ -1,15 +1,37 @@
-package com.bessaleks.internetprovider.dto;
+package com.bessaleks.internetprovider.entity;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.Objects;
 
 @MappedSuperclass
-@Data
-public abstract class BaseEntityDto implements Serializable {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public abstract class BaseEntity {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BaseEntity that = (BaseEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

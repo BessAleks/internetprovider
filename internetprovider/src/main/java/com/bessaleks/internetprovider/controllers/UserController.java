@@ -1,36 +1,47 @@
 package com.bessaleks.internetprovider.controllers;
 
-import com.bessaleks.internetprovider.models.User;
-import com.bessaleks.internetprovider.repository.UserRepository;
-import com.bessaleks.internetprovider.servises.Service;
+import com.bessaleks.internetprovider.dto.UserDto;
 import com.bessaleks.internetprovider.servises.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.transaction.Transactional;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
+
 @RestController
-@RequestMapping("user")
+@RequestMapping("users")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@Transactional
 public class UserController {
-    @Autowired
-    private UserRepository userRepository;
+
+    private UserService userService;
 
     @PostMapping
-    public String addUser(@RequestBody @Valid User user) {
-        if(!userRepository.existsByLogin(user.getLogin())) {
-            user.setPassword(UserService.md5Apache(user.getPassword()));
-            userRepository.save(user);
-            return "User added successful!";
-        }
-        else {
-            return "User with this userLogin added to DB!";
-        }
+    public UserDto createUser(@RequestBody UserDto userDto) {
+        return userService.createUser(userDto);
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        Iterable <User> source = userRepository.findAll();
-        return Service.iterableToArray(source);
+    public List<UserDto> getAll() {
+        return userService.getAll();
     }
+
+    @GetMapping("id")
+    public UserDto getUser(@PathParam("id") Long id) {
+        return userService.getUser(id);
+    }
+
+    @PutMapping
+    public UserDto updateUser(@RequestBody UserDto userDto) {
+        return userService.updateUser(userDto);
+    }
+
+    @DeleteMapping
+    public void deleteUser(@PathParam("id") Long id) {
+        userService.deleteUser(id);
+    }
+
 }

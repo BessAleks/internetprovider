@@ -1,26 +1,21 @@
-package com.bessaleks.internetprovider.dto;
+package com.bessaleks.internetprovider.entity;
 
-
-import lombok.*;
+import com.bessaleks.internetprovider.enums.OperationType;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table (name="operations_history")
-public class OperationsHistoryDto extends BaseEntityDto {
+public class OperationsHistory extends BaseEntity {
 
     @Column(name="operation_history_operationType")
-    private String operationType;
+    private OperationType operationType;
 
     @Column(name="operation_history_operationSum")
     private Long operationSum;
 
-    @ManyToOne(optional=false, cascade=CascadeType.ALL)
-    @JoinColumn(name = "userId")
-    private UserDto userDto;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

@@ -1,20 +1,14 @@
-package com.bessaleks.internetprovider.dto;
-
-import lombok.*;
+package com.bessaleks.internetprovider.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table (name="addresses")
-public class AddressDto extends BaseEntityDto {
+public class Address extends BaseEntity {
 
-    @OneToOne(fetch= FetchType.LAZY, cascade=CascadeType.ALL)
-    private PassportDto passportDto;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name="address_country")
     private String country;
@@ -34,10 +28,8 @@ public class AddressDto extends BaseEntityDto {
     @Column(name="address_postCode")
     private Long postCode;
 
-    @NotBlank
-    @OneToOne
-    @MapsId
-    @JoinColumn(name="contractId")
-    private ContractDto contractDto;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="contract_id")
+    private Contract contract;
 
 }

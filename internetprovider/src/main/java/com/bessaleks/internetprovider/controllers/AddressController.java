@@ -1,32 +1,46 @@
 package com.bessaleks.internetprovider.controllers;
 
-import com.bessaleks.internetprovider.models.Address;
-import com.bessaleks.internetprovider.repository.AddressRepository;
-import com.bessaleks.internetprovider.servises.Service;
-import com.bessaleks.internetprovider.servises.UserService;
+import com.bessaleks.internetprovider.dto.AddressDto;
+import com.bessaleks.internetprovider.servises.AddressService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.transaction.Transactional;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
 @RequestMapping("address")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@Transactional
 public class AddressController {
 
-    @Autowired
-    private AddressRepository addressRepository;
+    private AddressService addressService;
 
     @PostMapping
-    public String addAddress(@RequestBody @Valid Address address) {
-            addressRepository.save(address);
-            return "Address added to DB!";
+    public AddressDto createAddress(@RequestBody AddressDto addressDto) {
+        return addressService.createAddress(addressDto);
     }
 
     @GetMapping
-    public List<Address> getAllAddress() {
-        Iterable <Address> source = addressRepository.findAll();
-        return Service.iterableToArray(source);
+    public List<AddressDto> getAll() {
+        return addressService.getAll();
+    }
+
+    @GetMapping("id")
+    public AddressDto getAddress(@PathParam("id") Long id) {
+        return addressService.getAddress(id);
+    }
+
+    @PutMapping
+    public AddressDto updateAddress(@RequestBody AddressDto addressDto) {
+        return addressService.updateAddress(addressDto);
+    }
+
+    @DeleteMapping
+    public void deleteAddress(@PathParam("id") Long id) {
+        addressService.deleteAddress(id);
     }
 
 }

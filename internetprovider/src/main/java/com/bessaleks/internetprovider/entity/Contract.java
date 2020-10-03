@@ -1,18 +1,11 @@
-package com.bessaleks.internetprovider.dto;
-
-import lombok.*;
+package com.bessaleks.internetprovider.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table (name="contracts")
-public class ContractDto extends BaseEntityDto {
+public class Contract extends BaseEntity {
 
     @Column(name="contract_number")
     private String number;
@@ -20,13 +13,11 @@ public class ContractDto extends BaseEntityDto {
     @Column(name="contract_startDate")
     private Date startDate;
 
-    @OneToOne(fetch= FetchType.LAZY, cascade=CascadeType.ALL)
-    private AddressDto addressDto;
+    @OneToOne(mappedBy = "contract", fetch= FetchType.LAZY, cascade=CascadeType.ALL)
+    private Address address;
 
-    @NotBlank
-    @OneToOne
-    @MapsId
-    @JoinColumn(name="rateId")
-    private RateDto rateDto;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="rate_id")
+    private Rate rate;
 
 }

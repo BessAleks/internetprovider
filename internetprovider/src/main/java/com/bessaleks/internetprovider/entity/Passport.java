@@ -1,29 +1,16 @@
-package com.bessaleks.internetprovider.dto;
-
+package com.bessaleks.internetprovider.entity;
 
 import com.bessaleks.internetprovider.enums.Sex;
-import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table (name="passports")
-public class PassportDto extends BaseEntityDto {
+public class Passport extends BaseEntity {
 
-    @OneToOne(fetch= FetchType.LAZY, cascade=CascadeType.ALL)
-    private UserDto userDto;
-
-    @NotBlank
-    @OneToOne
-    @MapsId
-    @JoinColumn(name="addressId")
-    private AddressDto addressDto;
+    @OneToOne(mappedBy = "passport", fetch= FetchType.LAZY, cascade=CascadeType.ALL)
+    private User user;
 
     @Column(name="user_name")
     private String name;

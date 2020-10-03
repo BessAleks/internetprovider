@@ -1,4 +1,4 @@
-package com.bessaleks.internetprovider.dto;
+package com.bessaleks.internetprovider.enums;
 
 public enum Sex {
     MALE,

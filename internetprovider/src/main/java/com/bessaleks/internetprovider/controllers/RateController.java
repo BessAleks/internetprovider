@@ -1,30 +1,45 @@
 package com.bessaleks.internetprovider.controllers;
 
-import com.bessaleks.internetprovider.models.Rate;
-import com.bessaleks.internetprovider.repository.RateRepository;
-import com.bessaleks.internetprovider.servises.Service;
+import com.bessaleks.internetprovider.dto.RateDto;
+import com.bessaleks.internetprovider.servises.RateServise;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.transaction.Transactional;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
 @RequestMapping("rate")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@Transactional
 public class RateController {
 
-    @Autowired
-    private RateRepository rateRepository;
+    private RateServise rateServise;
 
     @PostMapping
-    public String addContract(@RequestBody @Valid Rate rate) {
-        rateRepository.save(rate);
-        return "Rate added to DB!";
+    public RateDto createRate(@RequestBody RateDto rateDto) {
+        return rateServise.createRate(rateDto);
     }
 
     @GetMapping
-    public List<Rate> getAllContracts() {
-        Iterable <Rate> source = rateRepository.findAll();
-        return Service.iterableToArray(source);
+    public List<RateDto> getAll() {
+        return rateServise.getAll();
+    }
+
+    @GetMapping("id")
+    public RateDto getRate(@PathParam("id") Long id) {
+        return rateServise.getRate(id);
+    }
+
+    @PutMapping
+    public RateDto updateRate(@RequestBody RateDto rateDto) {
+        return rateServise.updateRate(rateDto);
+    }
+
+    @DeleteMapping
+    public void deleteRate(@PathParam("id") Long id) {
+        rateServise.deleteRate(id);
     }
 }
