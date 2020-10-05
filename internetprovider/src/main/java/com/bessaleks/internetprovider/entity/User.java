@@ -1,5 +1,9 @@
 package com.bessaleks.internetprovider.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
@@ -7,6 +11,10 @@ import java.util.Set;
 
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table (name="users")
 public class User extends BaseEntity {
 

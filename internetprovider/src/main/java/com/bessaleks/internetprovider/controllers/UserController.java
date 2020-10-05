@@ -17,7 +17,12 @@ import java.util.List;
 @Transactional
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
+
+    @GetMapping("test")
+    public String getTest(@PathParam("id") Long num, String text) {
+        return "TEST!TEST!TEST! " + num*100 + " " + text;
+    }
 
     @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto) {
