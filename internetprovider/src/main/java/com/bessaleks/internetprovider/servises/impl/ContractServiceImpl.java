@@ -3,7 +3,6 @@ package com.bessaleks.internetprovider.servises.impl;
 import com.bessaleks.internetprovider.converter.CustomConversionService;
 import com.bessaleks.internetprovider.dto.ContractDto;
 import com.bessaleks.internetprovider.entity.Contract;
-import com.bessaleks.internetprovider.entity.User;
 import com.bessaleks.internetprovider.exeptions.NotFoundException;
 import com.bessaleks.internetprovider.repository.ContractRepository;
 import com.bessaleks.internetprovider.servises.ContractService;
@@ -29,7 +28,6 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public ContractDto createContract(ContractDto contractDto) {
         Contract contract = customConversionService.convert(contractDto,Contract.class);
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
         return customConversionService.convert(contractRepository.save(contract), ContractDto.class);
     }
 
