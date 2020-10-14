@@ -27,9 +27,10 @@ public class UserToUserDtoConverter implements Converter<User, UserDto> {
         userDto.setLogin(user.getLogin());
         userDto.setEmail(user.getEmail());
         userDto.setPhone(user.getPhone());
-        userDto.setPassportDto(customConversionService.convert(user.getPassport(), PassportDto.class));
-        userDto.setAddressDtos(customConversionService.convert(user.getAddress(), AddressDto.class));
-        userDto.setOperationHistoryDtos(customConversionService.convert(user.getOperationsHistories(), OperationHistoryDto.class));
+        userDto.setBalanse(user.getBalanse());
+        //userDto.setPassportDto(customConversionService.convert(user.getPassport(), PassportDto.class));
+        //userDto.setAddressDtos(customConversionService.convert(user.getAddresses(), AddressDto.class));
+        //userDto.setOperationHistoryDtos(customConversionService.convert(user.getOperationsHistories(), OperationHistoryDto.class));
         return userDto;
     }
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -15,9 +15,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table (name="passports")
+@AttributeOverrides({@AttributeOverride(name = "id", column = @Column(name = "passport_id"))})
 public class Passport extends BaseEntity {
 
-    @OneToOne(mappedBy = "passport", fetch= FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @Column(name="user_name")
@@ -26,23 +28,24 @@ public class Passport extends BaseEntity {
     @Column(name="user_surname")
     private String surname;
 
-    @Column(name="user_lastName")
+    @Column(name="user_last_name")
     private String lastName;
 
-    @Column(name="passport_passportNumber")
+    /*@Pattern(regexp = "\\[0-9]{10}")*/
+    @Column(name="passport_passport_number")
     private Long passportNumber;
 
-    @Column(name="passport_passportIssuedBy")
+    @Column(name="passport_passport_issued_by")
     private String passportIssuedBy;
 
-    @Column(name="passport_passportIssued")
-    private Date passportIssued;
+    @Column(name="passport_passport_issued")
+    private LocalDateTime passportIssued;
 
     @Column(name="passport_birthday")
-    private Date birthday;
+    private LocalDateTime birthday;
 
-    @Enumerated(value = EnumType.STRING)
     @Column(name="passport_sex")
+    @Enumerated(value = EnumType.STRING)
     private Sex sex;
 
 }

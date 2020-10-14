@@ -34,7 +34,7 @@ public class AddressDto implements Serializable {
     @JsonProperty(value = "address_flat")
     private String flat;
 
-    @JsonProperty(value = "address_postCode")
+    @JsonProperty(value = "address_postcode")
     private Long postCode;
 
     @JsonProperty(value = "address_contract")

@@ -13,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table (name="addresses")
+@AttributeOverrides({@AttributeOverride(name = "id", column = @Column(name = "address_id"))})
 public class Address extends BaseEntity {
 
     @ManyToOne
@@ -34,11 +35,10 @@ public class Address extends BaseEntity {
     @Column(name="address_flat")
     private String flat;
 
-    @Column(name="address_postCode")
+    @Column(name="address_postcode")
     private Long postCode;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="contract_id")
+    @OneToOne(mappedBy = "address")
     private Contract contract;
 
 }

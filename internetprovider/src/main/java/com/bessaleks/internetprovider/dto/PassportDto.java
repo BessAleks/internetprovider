@@ -8,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.Column;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -28,20 +29,20 @@ public class PassportDto implements Serializable {
     @JsonProperty(value = "user_surname")
     private String surname;
 
-    @JsonProperty(value = "user_lastName")
+    @JsonProperty(value = "user_last_name")
     private String lastName;
 
-    @JsonProperty(value = "passport_passportNumber")
+    @JsonProperty(value = "passport_passport_number")
     private Long passportNumber;
 
-    @JsonProperty(value = "passport_passportIssuedBy")
+    @JsonProperty(value = "passport_passport_issued_by")
     private String passportIssuedBy;
 
-    @JsonProperty(value = "passport_passportIssued")
-    private Date passportIssued;
+    @JsonProperty(value = "passport_passport_issued")
+    private LocalDateTime passportIssued;
 
     @JsonProperty(value = "passport_birthday")
-    private Date birthday;
+    private LocalDateTime birthday;
 
     @JsonProperty(value = "passport_sex")
     private Sex sex;

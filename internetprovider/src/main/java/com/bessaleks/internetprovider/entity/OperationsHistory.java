@@ -7,23 +7,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table (name="operations_history")
+@Table (name="operations_histories")
+@AttributeOverrides({@AttributeOverride(name = "id", column = @Column(name = "operation_history_id"))})
 public class OperationsHistory extends BaseEntity {
 
-    @Column(name="operation_history_operationType")
+    @Column(name="operation_history_operation_type")
+    @Enumerated(value = EnumType.STRING)
     private OperationType operationType;
 
-    @Column(name="operation_history_operationSum")
+    @Column(name="operation_history_operation_sum")
     private Long operationSum;
 
-    @ManyToOne
+    @Column(name = "operation_history_operation_date")
+    private LocalDateTime operationDate;
+
+    @ManyToOne (fetch=FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
 }

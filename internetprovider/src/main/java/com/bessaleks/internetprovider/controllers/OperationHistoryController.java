@@ -16,11 +16,11 @@ import java.util.List;
 @Transactional
 public class OperationHistoryController {
 
-    private OperationHistoryService operationHistoryService;
+    private final OperationHistoryService operationHistoryService;
 
     @PostMapping
-    public OperationHistoryDto createOperationHistory(@RequestBody OperationHistoryDto operationHistoryDto) {
-        return operationHistoryService.createOperationHistory(operationHistoryDto);
+    public OperationHistoryDto createOperationHistory(@RequestParam("id") Long id,@RequestBody OperationHistoryDto operationHistoryDto) {
+        return operationHistoryService.createOperationHistory(id,operationHistoryDto);
     }
     @GetMapping
     public List<OperationHistoryDto> getAll() {

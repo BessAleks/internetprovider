@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class AddressController {
 
-    private AddressService addressService;
+    private final AddressService addressService;
 
     @PostMapping
     public AddressDto createAddress(@RequestBody AddressDto addressDto) {

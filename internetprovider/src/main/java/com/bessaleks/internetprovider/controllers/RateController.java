@@ -1,7 +1,7 @@
 package com.bessaleks.internetprovider.controllers;
 
 import com.bessaleks.internetprovider.dto.RateDto;
-import com.bessaleks.internetprovider.servises.RateServise;
+import com.bessaleks.internetprovider.servises.RateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,30 +16,30 @@ import java.util.List;
 @Transactional
 public class RateController {
 
-    private RateServise rateServise;
+    private final RateService rateService;
 
     @PostMapping
     public RateDto createRate(@RequestBody RateDto rateDto) {
-        return rateServise.createRate(rateDto);
+        return rateService.createRate(rateDto);
     }
 
     @GetMapping
     public List<RateDto> getAll() {
-        return rateServise.getAll();
+        return rateService.getAll();
     }
 
     @GetMapping("id")
     public RateDto getRate(@PathParam("id") Long id) {
-        return rateServise.getRate(id);
+        return rateService.getRate(id);
     }
 
     @PutMapping
     public RateDto updateRate(@RequestBody RateDto rateDto) {
-        return rateServise.updateRate(rateDto);
+        return rateService.updateRate(rateDto);
     }
 
     @DeleteMapping
     public void deleteRate(@PathParam("id") Long id) {
-        rateServise.deleteRate(id);
+        rateService.deleteRate(id);
     }
 }

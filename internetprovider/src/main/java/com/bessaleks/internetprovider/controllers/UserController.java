@@ -1,6 +1,8 @@
 package com.bessaleks.internetprovider.controllers;
 
+import com.bessaleks.internetprovider.dto.OperationHistoryDto;
 import com.bessaleks.internetprovider.dto.UserDto;
+import com.bessaleks.internetprovider.entity.OperationsHistory;
 import com.bessaleks.internetprovider.servises.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -34,19 +37,23 @@ public class UserController {
         return userService.getAll();
     }
 
-    @GetMapping("id")
-    public UserDto getUser(@PathParam("id") Long id) {
+    @GetMapping("{id}")
+    public UserDto getUser(@PathVariable (value = "id") Long id) {
         return userService.getUser(id);
     }
 
     @PutMapping
-    public UserDto updateUser(@RequestBody UserDto userDto) {
-        return userService.updateUser(userDto);
+    public UserDto updateUser(@RequestParam("id") Long id, @RequestBody UserDto userDto) {
+        return userService.updateUser(id,userDto);
     }
 
     @DeleteMapping
-    public void deleteUser(@PathParam("id") Long id) {
+    public void deleteUser(@RequestParam("id") Long id) {
         userService.deleteUser(id);
     }
 
+    @GetMapping("{id}/operations")
+    public List<OperationHistoryDto> getOperations(@PathVariable (value = "id") Long id){
+        return userService.getOperations(id);
+    }
 }

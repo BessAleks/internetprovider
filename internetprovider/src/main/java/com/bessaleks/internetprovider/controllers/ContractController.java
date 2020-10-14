@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class ContractController {
 
-    private ContractService contractService;
+    private final ContractService contractService;
 
     @PostMapping
     public ContractDto createContract(@RequestBody ContractDto contractDto) {

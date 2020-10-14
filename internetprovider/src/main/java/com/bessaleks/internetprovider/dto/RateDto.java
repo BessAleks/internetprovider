@@ -16,7 +16,7 @@ public class RateDto implements Serializable {
     @JsonProperty("id")
     private Long id;
 
-    @JsonProperty(value = "rate_rateName")
+    @JsonProperty(value = "rate_rate_name")
     private String rateName;
 
     @JsonProperty(value = "rate_speed")

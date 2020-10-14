@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class PassportController {
 
-    private PassportService passportService;
+    private final PassportService passportService;
 
     @PostMapping
     public PassportDto createPassport(@RequestBody PassportDto passportDto) {

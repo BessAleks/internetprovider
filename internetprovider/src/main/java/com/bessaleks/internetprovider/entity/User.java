@@ -7,8 +7,8 @@ import lombok.Setter;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
-
 
 @Entity
 @Getter
@@ -16,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table (name="users")
+@AttributeOverrides({@AttributeOverride(name = "id", column = @Column(name = "user_id"))})
 public class User extends BaseEntity {
 
     @Column(name="user_login")
@@ -35,15 +36,14 @@ public class User extends BaseEntity {
     @Column(name="user_balanse")
     private Double balanse;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_passport_id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Passport passport;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<Address> address;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    private Set<Address> addresses = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set <OperationsHistory> operationsHistories;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    private Set <OperationsHistory> operationsHistories = new HashSet<>();
 
     public void setPassword(String password) {
         this.password = md5Apache(password);

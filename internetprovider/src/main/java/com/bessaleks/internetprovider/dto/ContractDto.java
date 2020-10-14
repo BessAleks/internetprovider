@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -20,8 +21,8 @@ public class ContractDto implements Serializable {
     @JsonProperty(value = "contract_number")
     private String number;
 
-    @JsonProperty(value = "contract_startDate")
-    private Date startDate;
+    @JsonProperty(value = "contract_start_date")
+    private LocalDateTime startDate;
 
     @JsonProperty(value = "contract_address")
     private AddressDto addressDto;
