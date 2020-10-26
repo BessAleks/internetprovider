@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,7 +24,7 @@ public class OperationsHistory extends BaseEntity {
     private OperationType operationType;
 
     @Column(name="operation_history_operation_sum")
-    private Long operationSum;
+    private BigDecimal operationSum;
 
     @Column(name = "operation_history_operation_date")
     private LocalDateTime operationDate;

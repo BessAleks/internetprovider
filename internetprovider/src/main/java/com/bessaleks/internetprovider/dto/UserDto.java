@@ -9,6 +9,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Getter
@@ -35,7 +36,7 @@ public class UserDto implements Serializable {
     private String phone;
 
     @JsonProperty(value = "user_balanse")
-    private Double balanse;
+    private BigDecimal balanse;
 
     @JsonProperty(value = "user_passport")
     private PassportDto passportDto;

@@ -21,7 +21,7 @@ public class RateToRateDtoConverter implements Converter<Rate, RateDto> {
         rateDto.setRateName(rate.getRateName());
         rateDto.setSpeed(rate.getSpeed());
         rateDto.setPrice(rate.getPrice());
-        rateDto.setContractDto(customConversionService.convert(rate.getContract(), ContractDto.class));
+        //rateDto.setContractDto(customConversionService.convert(rate.getContract(), ContractDto.class));
         return rateDto;
     }
 }

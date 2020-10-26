@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,9 +26,8 @@ public class Rate extends BaseEntity {
     private Long speed;
 
     @Column(name="rate_price")
-    private Double price;
+    private BigDecimal price;
 
     @OneToMany(mappedBy = "rate", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private Set<Contract> contracts = new HashSet<>();
-
 }

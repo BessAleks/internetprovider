@@ -18,6 +18,7 @@ import com.bessaleks.internetprovider.servises.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = customConversionService.convert(userDto,User.class);
-        user.setBalanse(0.0);
+        user.setBalanse(new BigDecimal(0));
         Passport passport = customConversionService.convert(userDto.getPassportDto(), Passport.class);
         passport.setUser(user);
         customConversionService.convert(passportRepository.save(passport), PassportDto.class);

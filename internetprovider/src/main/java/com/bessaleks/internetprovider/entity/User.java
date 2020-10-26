@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ public class User extends BaseEntity {
     private String phone;
 
     @Column(name="user_balanse")
-    private Double balanse;
+    private BigDecimal balanse;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Passport passport;

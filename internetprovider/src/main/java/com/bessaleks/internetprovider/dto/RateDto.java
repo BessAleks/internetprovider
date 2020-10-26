@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -23,7 +24,7 @@ public class RateDto implements Serializable {
     private Long speed;
 
     @JsonProperty(value = "rate_price")
-    private Double price;
+    private BigDecimal price;
 
     @JsonProperty(value = "rate_contract")
     private ContractDto contractDto;

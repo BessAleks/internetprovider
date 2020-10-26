@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -22,7 +23,7 @@ public class OperationHistoryDto implements Serializable {
     private OperationType operationType;
 
     @JsonProperty(value = "operation_history_operation_sum")
-    private Long operationSum;
+    private BigDecimal operationSum;
 
     @JsonProperty(value = "operation_history_operation_date")
     private LocalDateTime operationDate;
