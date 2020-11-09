@@ -1,9 +1,7 @@
 package com.bessaleks.internetprovider.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.bessaleks.internetprovider.enums.UserType;
+import lombok.*;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.*;
@@ -18,13 +16,10 @@ import java.util.Set;
 @AllArgsConstructor
 @Table (name="users")
 @AttributeOverrides({@AttributeOverride(name = "id", column = @Column(name = "user_id"))})
+//@EqualsAndHashCode(callSuper = true, exclude = "billingDetails")
+//@ToString(exclude = "billingDetails", callSuper = true)
+@EntityListeners(value = UserEntityListener.class)
 public class User extends BaseEntity {
-
-    @Column(name="user_login")
-    private String login;
-
-    @Column(name="user_password")
-    private String password;
 
     /*@Email*/
     @Column(name="user_email")
@@ -46,9 +41,19 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private Set <OperationsHistory> operationsHistories = new HashSet<>();
 
-    public void setPassword(String password) {
+    @Column(name = "user_type")
+    @Enumerated(value = EnumType.STRING)
+    private UserType userType = UserType.ORDINAL;
+
+    @Transient
+    private String inMemory;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CustomUserDetails customUserDetails;
+
+    /*public void setPassword(String password) {
         this.password = md5Apache(password);
-    }
+    }*/
 
     public static String md5Apache(String st) {
         String md5Hex = DigestUtils.md5Hex(st);

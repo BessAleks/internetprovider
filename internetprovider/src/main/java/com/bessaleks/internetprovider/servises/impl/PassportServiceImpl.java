@@ -3,8 +3,10 @@ package com.bessaleks.internetprovider.servises.impl;
 import com.bessaleks.internetprovider.converter.CustomConversionService;
 import com.bessaleks.internetprovider.dto.PassportDto;
 import com.bessaleks.internetprovider.entity.Passport;
+import com.bessaleks.internetprovider.entity.User;
 import com.bessaleks.internetprovider.exeptions.NotFoundException;
 import com.bessaleks.internetprovider.repository.PassportRepository;
+import com.bessaleks.internetprovider.repository.UserRepository;
 import com.bessaleks.internetprovider.servises.PassportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +20,21 @@ import java.util.stream.Collectors;
 public class PassportServiceImpl implements PassportService {
 
     private final PassportRepository passportRepository;
+    private final UserRepository userRepository;
     private final CustomConversionService customConversionService;
 
     @Autowired
-    public PassportServiceImpl(PassportRepository passportRepository, CustomConversionService customConversionService) {
+    public PassportServiceImpl(PassportRepository passportRepository, UserRepository userRepository, CustomConversionService customConversionService) {
         this.passportRepository = passportRepository;
+        this.userRepository = userRepository;
         this.customConversionService = customConversionService;
     }
 
     @Override
     public PassportDto createPassport(PassportDto passportDto) {
+        User user = userRepository.findById(passportDto.getId()).orElseThrow(() -> new NotFoundException("User is not found"));
         Passport passport = customConversionService.convert(passportDto,Passport.class);
+        passport.setUser(user);
         return customConversionService.convert(passportRepository.save(passport), PassportDto.class);
     }
 

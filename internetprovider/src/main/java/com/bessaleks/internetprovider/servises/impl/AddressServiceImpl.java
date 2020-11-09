@@ -3,6 +3,8 @@ package com.bessaleks.internetprovider.servises.impl;
 import com.bessaleks.internetprovider.converter.CustomConversionService;
 import com.bessaleks.internetprovider.dto.AddressDto;
 import com.bessaleks.internetprovider.entity.Address;
+import com.bessaleks.internetprovider.entity.Passport;
+import com.bessaleks.internetprovider.entity.User;
 import com.bessaleks.internetprovider.exeptions.NotFoundException;
 import com.bessaleks.internetprovider.repository.AddressRepository;
 import com.bessaleks.internetprovider.repository.ContractRepository;
@@ -33,7 +35,9 @@ public class AddressServiceImpl implements AddressService {
     
     @Override
     public AddressDto createAddress(AddressDto addressDto) {
+        User user = userRepository.findById(addressDto.getId()).orElseThrow(() -> new NotFoundException("User is not found"));
         Address address = customConversionService.convert(addressDto,Address.class);
+        address.setUser(user);
         return customConversionService.convert(addressRepository.save(address), AddressDto.class);
     }
 

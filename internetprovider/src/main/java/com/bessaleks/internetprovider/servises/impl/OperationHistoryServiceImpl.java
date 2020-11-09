@@ -5,6 +5,7 @@ import com.bessaleks.internetprovider.dto.OperationHistoryDto;
 import com.bessaleks.internetprovider.dto.UserDto;
 import com.bessaleks.internetprovider.entity.OperationsHistory;
 import com.bessaleks.internetprovider.entity.User;
+import com.bessaleks.internetprovider.enums.OperationType;
 import com.bessaleks.internetprovider.exeptions.NotFoundException;
 import com.bessaleks.internetprovider.repository.OperationsHistoryRepository;
 import com.bessaleks.internetprovider.repository.UserRepository;
@@ -35,7 +36,16 @@ public class OperationHistoryServiceImpl implements OperationHistoryService {
     public OperationHistoryDto createOperationHistory(Long id,OperationHistoryDto operationHistoryDto) {
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
         OperationsHistory operationsHistory = customConversionService.convert(operationHistoryDto,OperationsHistory.class);
-        user.setBalanse(user.getBalanse().add(operationHistoryDto.getOperationSum()));
+        if(operationHistoryDto.getOperationType().equals(OperationType.ADD)) {
+            user.setBalanse(user.getBalanse().add(operationHistoryDto.getOperationSum()));
+        }
+        else if (operationHistoryDto.getOperationType().equals(OperationType.DEBIT)){
+            user.setBalanse(user.getBalanse().subtract(operationHistoryDto.getOperationSum()));
+        }
+        else {
+            throw new ExceptionInInitializerError("Error operation!");
+
+        }
         user.getOperationsHistories().add(operationsHistory);
         operationsHistory.setUser(user);
         customConversionService.convert(userRepository.save(user),UserDto.class);

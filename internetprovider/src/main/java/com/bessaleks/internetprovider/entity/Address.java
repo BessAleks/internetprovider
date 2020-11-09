@@ -38,7 +38,7 @@ public class Address extends BaseEntity {
     @Column(name="address_postcode")
     private Long postCode;
 
-    @OneToOne(mappedBy = "address")
+    @OneToOne(mappedBy = "address",cascade = CascadeType.ALL)
     private Contract contract;
 
 }

@@ -24,8 +24,6 @@ public class AddressToAddressDtoConverter implements Converter<Address, AddressD
         addressDto.setHouse(address.getHouse());
         addressDto.setFlat(address.getFlat());
         addressDto.setPostCode(address.getPostCode());
-        addressDto.setUserDto(customConversionService.convert(address.getUser(), UserDto.class));
-        addressDto.setContractDto(customConversionService.convert(address.getContract(), ContractDto.class));
         return addressDto;
     }
 }
