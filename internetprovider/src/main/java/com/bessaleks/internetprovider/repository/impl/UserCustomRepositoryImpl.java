@@ -33,23 +33,17 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
 
     @Override
     public User getById(Long userId) {
-        return null;
-    }
-
-    /*@Override
-    public User getById(Long userId) {
         User user = entityManager.find(User.class, userId);
         entityManager.detach(user);
         entityManager.merge(user);
-        user.getBillingDetails().forEach(BillingDetails::getBillingType);
         return entityManager.find(User.class, userId);
-    }*/
+    }
 
     @Override
     public void delete(Long userId) {
         User user = getById(userId);
         if (Objects.isNull(user)) {
-            throw new RuntimeException("User not found");
+            throw new RuntimeException("User not found!");
         }
         entityManager.remove(user);
     }
@@ -59,5 +53,4 @@ public class UserCustomRepositoryImpl implements UserCustomRepository {
         User user1 = entityManager.merge(user);
         entityManager.remove(user1);
     }
-
 }

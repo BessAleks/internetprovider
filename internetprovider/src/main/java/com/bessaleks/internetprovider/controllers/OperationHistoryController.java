@@ -19,8 +19,8 @@ public class OperationHistoryController {
     private final OperationHistoryService operationHistoryService;
 
     @PostMapping
-    public OperationHistoryDto createOperationHistory(@RequestParam("id") Long id,@RequestBody OperationHistoryDto operationHistoryDto) {
-        return operationHistoryService.createOperationHistory(id,operationHistoryDto);
+    public OperationHistoryDto createOperationHistory(@RequestBody OperationHistoryDto operationHistoryDto) {
+        return operationHistoryService.createOperationHistory(operationHistoryDto);
     }
     @GetMapping
     public List<OperationHistoryDto> getAll() {

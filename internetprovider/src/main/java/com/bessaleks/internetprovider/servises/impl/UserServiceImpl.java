@@ -44,12 +44,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto createUser(UserDto userDto,String password) {
+    public UserDto createUser(UserDto userDto) {
         User user = customConversionService.convert(userDto,User.class);
+        String password = "admin";
         user.setBalanse(new BigDecimal(0));
-        Passport passport = customConversionService.convert(userDto.getPassportDto(), Passport.class);
-        passport.setUser(user);
-        customConversionService.convert(passportRepository.save(passport), PassportDto.class);
         CustomUserDetails customUserDetails = new CustomUserDetails();
         customUserDetails.setUsername(user.getEmail());
         customUserDetails.setPassword(passwordEncoder.encode(password));
@@ -72,8 +70,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(Long id, UserDto userDto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
+    public UserDto updateUser(UserDto userDto) {
+        User user = userRepository.findById(userDto.getId()).orElseThrow(() -> new NotFoundException("User is not found"));
         user.setEmail(userDto.getEmail());
         user.setPhone(userDto.getPhone());
         return customConversionService.convert(userRepository.save(user),UserDto.class);

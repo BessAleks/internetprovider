@@ -35,17 +35,17 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public ContractDto createContract(Long address_id,Long rate_id,ContractDto contractDto) {
+    public ContractDto createContract(ContractDto contractDto) {
         Contract contract = customConversionService.convert(contractDto,Contract.class);
-        Address address = addressRepository.findById(address_id).orElseThrow(() -> new NotFoundException("Address is not found"));
-        Rate rate = rateRepository.findById(rate_id).orElseThrow(() -> new NotFoundException("Rate is not found"));
+        Address address = addressRepository.findById(contractDto.getAddressDto().getId()).orElseThrow(() -> new NotFoundException("Address is not found"));
+        Rate rate = rateRepository.findById(contractDto.getRateDto().getId()).orElseThrow(() -> new NotFoundException("Rate is not found"));
         contract.setRate(rate);
         contract.setAddress(address);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(contract.getStartDate().getYear());
         stringBuilder.append(contract.getStartDate().getMonthValue());
         stringBuilder.append(contract.getStartDate().getDayOfMonth());
-        stringBuilder.append("-" + address_id);
+        stringBuilder.append("-" + contractDto.getAddressDto().getId());
         contract.setNumber(stringBuilder.toString());
         return customConversionService.convert(contractRepository.save(contract), ContractDto.class);
     }

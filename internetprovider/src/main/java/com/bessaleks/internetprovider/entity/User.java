@@ -7,6 +7,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -16,8 +17,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Table (name="users")
 @AttributeOverrides({@AttributeOverride(name = "id", column = @Column(name = "user_id"))})
-//@EqualsAndHashCode(callSuper = true, exclude = "billingDetails")
-//@ToString(exclude = "billingDetails", callSuper = true)
 @EntityListeners(value = UserEntityListener.class)
 public class User extends BaseEntity {
 
@@ -51,12 +50,17 @@ public class User extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CustomUserDetails customUserDetails;
 
-    /*public void setPassword(String password) {
-        this.password = md5Apache(password);
-    }*/
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        User user = (User) o;
+        return Objects.equals(email, user.email);
+    }
 
-    public static String md5Apache(String st) {
-        String md5Hex = DigestUtils.md5Hex(st);
-        return md5Hex;
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), email);
     }
 }

@@ -25,14 +25,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("test")
-    public String getTest(@PathParam("id") Long num, String text) {
-        return "TEST!TEST!TEST! " + num*100 + " " + text;
-    }
-
     @PostMapping
-    public UserDto createUser(@RequestBody UserDto userDto, @PathVariable (value = "password")String password) {
-        return userService.createUser(userDto,password);
+    public UserDto createUser(@RequestBody UserDto userDto) {
+        return userService.createUser(userDto);
     }
 
     @GetMapping
@@ -46,8 +41,8 @@ public class UserController {
     }
 
     @PutMapping
-    public UserDto updateUser(@RequestParam("id") Long id, @RequestBody UserDto userDto) {
-        return userService.updateUser(id,userDto);
+    public UserDto updateUser(@RequestBody UserDto userDto) {
+        return userService.updateUser(userDto);
     }
 
     @DeleteMapping

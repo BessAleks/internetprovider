@@ -22,10 +22,7 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        List<String> authorities = userDetails.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+        List<String> authorities = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         claims.put("authorities", authorities);
         return Jwts.builder()
                 .setClaims(claims)
@@ -40,11 +37,7 @@ public class TokenServiceImpl implements TokenService {
     public UserDetails extractUserDetails(String token) {
         Claims claims = getAllClaimFromToken(token);
         Collection<? extends GrantedAuthority> authorities = extractAuthorities(claims);
-        return new User(
-                claims.getSubject(),
-                "",
-                authorities
-        );
+        return new User(claims.getSubject(), "", authorities);
     }
 
     private Claims getAllClaimFromToken(String token) {

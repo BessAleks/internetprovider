@@ -32,7 +32,7 @@ public class PassportServiceImpl implements PassportService {
 
     @Override
     public PassportDto createPassport(PassportDto passportDto) {
-        User user = userRepository.findById(passportDto.getId()).orElseThrow(() -> new NotFoundException("User is not found"));
+        User user = userRepository.findById(passportDto.getUserDto().getId()).orElseThrow(() -> new NotFoundException("User is not found"));
         Passport passport = customConversionService.convert(passportDto,Passport.class);
         passport.setUser(user);
         return customConversionService.convert(passportRepository.save(passport), PassportDto.class);

@@ -31,9 +31,9 @@ public class ProjectAspect {
     @Pointcut("execution(* com.bessaleks.internetprovider.servises.impl.OperationHistoryServiceImpl.createOperationHistory(..))")
     public void callAtOperationHistoryServicePublic() { }
 
-    @AfterReturning(value = "callAtOperationHistoryServicePublic() && args(id,operationHistoryDto)")
-    public void afterCallAtCreateOperationHistory(JoinPoint joinPoint, Long id, com.bessaleks.internetprovider.dto.OperationHistoryDto operationHistoryDto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
+    @AfterReturning(value = "callAtOperationHistoryServicePublic() && args(operationHistoryDto)")
+    public void afterCallAtCreateOperationHistory(JoinPoint joinPoint, com.bessaleks.internetprovider.dto.OperationHistoryDto operationHistoryDto) {
+        User user = userRepository.findById(operationHistoryDto.getUserDto().getId()).orElseThrow(() -> new NotFoundException("User is not found"));
         OperationsHistory operationsHistory = customConversionService.convert(operationHistoryDto,OperationsHistory.class);
         mailService.send(user.getEmail(),"Operation " + operationsHistory.getOperationType(),"Operation " + operationsHistory.getOperationType() + " for the sum: " + operationsHistory.getOperationSum() + " is successfully!\n" + "Time of operation: " + operationsHistory.getOperationDate());
     }

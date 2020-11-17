@@ -33,8 +33,8 @@ public class OperationHistoryServiceImpl implements OperationHistoryService {
 
 
     @Override
-    public OperationHistoryDto createOperationHistory(Long id,OperationHistoryDto operationHistoryDto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User is not found"));
+    public OperationHistoryDto createOperationHistory(OperationHistoryDto operationHistoryDto) {
+        User user = userRepository.findById(operationHistoryDto.getUserDto().getId()).orElseThrow(() -> new NotFoundException("User is not found"));
         OperationsHistory operationsHistory = customConversionService.convert(operationHistoryDto,OperationsHistory.class);
         if(operationHistoryDto.getOperationType().equals(OperationType.ADD)) {
             user.setBalanse(user.getBalanse().add(operationHistoryDto.getOperationSum()));

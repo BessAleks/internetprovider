@@ -8,10 +8,10 @@ import com.bessaleks.internetprovider.entity.Address;
 import java.util.List;
 
 public interface UserService {
-    UserDto createUser(UserDto userDto,String password);
+    UserDto createUser(UserDto userDto);
     UserDto getUser(Long id);
     List<UserDto> getAll();
-    UserDto updateUser(Long id,UserDto userDto);
+    UserDto updateUser(UserDto userDto);
     void deleteUser(Long id);
     List<OperationHistoryDto> getOperations(Long id);
     List<AddressDto> getAddresses(Long id);

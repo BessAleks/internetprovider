@@ -20,8 +20,8 @@ public class ContractController {
     private final ContractService contractService;
 
     @PostMapping
-    public ContractDto createContract(@RequestParam("address_id") Long address_id,@RequestParam ("rate_id") Long rate_id, @RequestBody ContractDto contractDto) {
-        return contractService.createContract(address_id,rate_id,contractDto);
+    public ContractDto createContract(@RequestParam ("rate_id") Long rate_id, @RequestBody ContractDto contractDto) {
+        return contractService.createContract(contractDto);
     }
 
     @GetMapping
