@@ -20,7 +20,7 @@ public class ContractController {
     private final ContractService contractService;
 
     @PostMapping
-    public ContractDto createContract(@RequestParam ("rate_id") Long rate_id, @RequestBody ContractDto contractDto) {
+    public ContractDto createContract(@RequestBody ContractDto contractDto) {
         return contractService.createContract(contractDto);
     }
 

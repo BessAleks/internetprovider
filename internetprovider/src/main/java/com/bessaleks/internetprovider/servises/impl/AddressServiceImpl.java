@@ -35,7 +35,7 @@ public class AddressServiceImpl implements AddressService {
     
     @Override
     public AddressDto createAddress(AddressDto addressDto) {
-        User user = userRepository.findById(addressDto.getId()).orElseThrow(() -> new NotFoundException("User is not found"));
+        User user = userRepository.findById(addressDto.getUserDto().getId()).orElseThrow(() -> new NotFoundException("User is not found"));
         Address address = customConversionService.convert(addressDto,Address.class);
         address.setUser(user);
         return customConversionService.convert(addressRepository.save(address), AddressDto.class);
